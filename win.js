@@ -21,12 +21,20 @@ function drawWin() {
   textAlign(CENTER, CENTER);
 
   // Main success message
-  textSize(40);
-  text("You Win!", width / 2, 300);
+  textSize(36);
+  text("Your courage made a difference.", width / 2, 280);
 
-  // Instruction text
+  //Subtext message
   textSize(20);
-  text("Click or press R to return to Start.", width / 2, 360);
+  text(
+    "By stepping in and speaking the truth, you helped someone and showed integrity.\nSmall actions can have big impacts.",
+    width / 2,
+    330,
+  );
+
+  // Restart text
+  textSize(20);
+  text("Click or press R to reflect and restart.", width / 2, 390);
 }
 
 // ------------------------------------------------------------
@@ -34,6 +42,8 @@ function drawWin() {
 // ------------------------------------------------------------
 // Any mouse click returns the player to the start screen
 function winMousePressed() {
+  karma = 0;
+  scene = 0;
   currentScreen = "start";
 }
 
@@ -43,6 +53,8 @@ function winMousePressed() {
 // R is commonly used for “restart” in games
 function winKeyPressed() {
   if (key === "r" || key === "R") {
+    karma = 0;
+    scene = 0;
     currentScreen = "start";
   }
 }

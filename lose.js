@@ -18,11 +18,19 @@ function drawLose() {
 
   // Main message
   textSize(40);
-  text("You Lose!", width / 2, 300);
+  text("Some moments pass quietly.", width / 2, 280);
 
-  // Instruction text
+  //SUbtext message
   textSize(20);
-  text("Click or press R to return to Start.", width / 2, 360);
+  text(
+    "You chose to stay silent. While it may have been easier, the incident left a mark.\nSometimes, not acting has consequences too.",
+    width / 2,
+    330,
+  );
+
+  // Restart text
+  textSize(20);
+  text("Click or press R to reflect and restart.", width / 2, 390);
 }
 
 // ------------------------------
@@ -31,6 +39,8 @@ function drawLose() {
 // Any mouse click returns the player to the start screen
 // (no buttons needed for this simple end state)
 function loseMousePressed() {
+  karma = 0;
+  scene = 0;
   currentScreen = "start";
 }
 
@@ -40,6 +50,8 @@ function loseMousePressed() {
 // R is commonly used for “restart” in games
 function loseKeyPressed() {
   if (key === "r" || key === "R") {
+    karma = 0;
+    scene = 0;
     currentScreen = "start";
   }
 }

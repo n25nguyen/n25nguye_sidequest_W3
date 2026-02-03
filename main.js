@@ -22,7 +22,7 @@
 // We store the “name” of the current screen as a string.
 // Only one screen should be active at a time.
 let currentScreen = "start"; // "start" | "instr" | "game" | "win" | "lose"
-
+let karma = 0; // can be negative or positive
 // ------------------------------
 // setup() runs ONCE at the beginning
 // ------------------------------
@@ -49,7 +49,7 @@ function draw() {
   //   lose.js          → drawLose()
 
   if (currentScreen === "start") drawStart();
-  else if (currentScreen === "instr") drawInstr();
+  else if (currentScreen === "instructions") drawInstr();
   else if (currentScreen === "game") drawGame();
   else if (currentScreen === "win") drawWin();
   else if (currentScreen === "lose") drawLose();
@@ -74,7 +74,7 @@ function mousePressed() {
   // lose.js          → loseMousePressed()
 
   if (currentScreen === "start") startMousePressed();
-  else if (currentScreen === "instr") instrMousePressed();
+  else if (currentScreen === "instructions") instrMousePressed();
   else if (currentScreen === "game") gameMousePressed();
   // The ?.() means “call this function only if it exists”
   // This prevents errors if a screen doesn’t implement a handler.
@@ -95,7 +95,7 @@ function keyPressed() {
   // lose.js          → loseKeyPressed()
 
   if (currentScreen === "start") startKeyPressed();
-  else if (currentScreen === "instr") instrKeyPressed();
+  else if (currentScreen === "instructions") instrKeyPressed();
   else if (currentScreen === "game") gameKeyPressed?.();
   else if (currentScreen === "win") winKeyPressed?.();
   else if (currentScreen === "lose") loseKeyPressed?.();

@@ -12,6 +12,13 @@
 // and interact with the button on the game screen.
 // Keeping this in one object makes it easier to move,
 // resize, or restyle the button later.
+
+// ------------------------------
+// Story state
+// ------------------------------
+let scene = 0; // which moment in the story we are in
+// uses global karma declared in main.js
+
 const gameBtn = {
   x: 400, // x position (centre of the button)
   y: 550, // y position (centre of the button)
@@ -31,25 +38,66 @@ function drawGame() {
 
   // ---- Title and instructions text ----
   fill(0); // black text
-  textSize(32);
   textAlign(CENTER, CENTER);
-  text("Game Screen", width / 2, 160);
 
-  textSize(18);
-  text(
-    "Click the button (or press ENTER) for a random result.",
-    width / 2,
-    210,
-  );
+  if (scene === 0) {
+    textSize(32);
+    text("A quiet moment", width / 2, 140);
 
-  // ---- Draw the button ----
-  // We pass the button object to a helper function
-  drawGameButton(gameBtn);
+    textSize(18);
+    text(
+      "You’re walking through the school hallway when you notice a \nclassmate being teased and pushed around by a group of students. \nDo you step in to help, or do you ignore the situation?",
+      width / 2,
+      210,
+    );
+
+    // first choice
+    gameBtn.label = "STEP IN";
+    gameBtn.x = 400;
+    gameBtn.y = 500;
+    drawGameButton(gameBtn);
+
+    // second choice
+    gameBtn.label = "IGNORE THEM";
+    gameBtn.x = 400;
+    gameBtn.y = 600;
+    drawGameButton(gameBtn);
+  } else if (scene === 1) {
+    textSize(32);
+    text("Later that day...", width / 2, 140);
+
+    textSize(18);
+    text(
+      "Later in class, the teacher asks what happened in the hallway. \nYou have a chance to speak up about what you saw, \nbut telling the truth might make some students angry. \nDo you tell the truth, or keep quiet to avoid conflict?",
+      width / 2,
+      210,
+    );
+
+    // firt option
+    gameBtn.label = "TELL THE TRUTH";
+    gameBtn.x = 400;
+    gameBtn.y = 500;
+    drawGameButton(gameBtn);
+
+    // second option
+    gameBtn.label = "KEEP QUIET";
+    gameBtn.x = 400;
+    gameBtn.y = 600;
+    drawGameButton(gameBtn);
+  }
 
   // ---- Cursor feedback ----
   // If the mouse is over the button, show a hand cursor
   // Otherwise, show the normal arrow cursor
-  cursor(isHover(gameBtn) ? HAND : ARROW);
+  // Karma display
+  textSize(14);
+  text("Karma: " + karma, width / 2, height - 40);
+  cursor(
+    isHover({ x: 400, y: 500, w: 260, h: 90 }) ||
+      isHover({ x: 400, y: 600, w: 260, h: 90 })
+      ? HAND
+      : ARROW,
+  );
 }
 
 // ------------------------------
@@ -90,9 +138,25 @@ function drawGameButton({ x, y, w, h, label }) {
 // This function is called from main.js
 // only when currentScreen === "game"
 function gameMousePressed() {
-  // Only trigger the outcome if the button is clicked
-  if (isHover(gameBtn)) {
-    triggerRandomOutcome();
+  // scene 0 choices
+  if (scene === 0) {
+    if (isHover({ x: 400, y: 500, w: 260, h: 90 })) {
+      karma += 1; //STEP IN CHOICE
+      scene = 1;
+    } else if (isHover({ x: 400, y: 600, w: 260, h: 90 })) {
+      karma += 0; // IGNORE THEM CHOICE
+      scene = 1;
+    }
+  }
+  // scene 1 choices
+  else if (scene === 1) {
+    if (isHover({ x: 400, y: 500, w: 260, h: 90 })) {
+      karma += 1; // TELL THE TRUTH CHOICE
+      currentScreen = karma >= 2 ? "win" : "lose";
+    } else if (isHover({ x: 400, y: 600, w: 260, h: 90 })) {
+      karma += 0; // KEEP QUIET CHOICE
+      currentScreen = karma >= 2 ? "win" : "lose";
+    }
   }
 }
 
@@ -103,7 +167,13 @@ function gameMousePressed() {
 function gameKeyPressed() {
   // ENTER key triggers the same behaviour as clicking the button
   if (keyCode === ENTER) {
-    triggerRandomOutcome();
+    if (scene === 0) {
+      karma += 1; //choose first option
+      scene = 1;
+    } else if (scene === 1) {
+      karma += 1;
+      currentScreen = karma >= 2 ? "win" : "lose";
+    }
   }
 }
 
@@ -113,16 +183,17 @@ function gameKeyPressed() {
 // This function decides what happens next in the game.
 // It does NOT draw anything.
 function triggerRandomOutcome() {
-  // random() returns a value between 0 and 1
-  // Here we use a 50/50 chance:
-  // - less than 0.5 → win
-  // - 0.5 or greater → lose
-  //
-  // You can bias this later, for example:
-  // random() < 0.7 → 70% chance to win
-  if (random() < 0.5) {
-    currentScreen = "win";
-  } else {
-    currentScreen = "lose";
+  // scene-based branching
+  if (scene === 0) {
+    karma += 1; // helping someone
+    scene = 1; //move to next scene
+  } else if (scene === 1) {
+    karma += 1;
+
+    if (karma >= 2) {
+      currentScreen = "win";
+    } else {
+      currentScreen = "lose";
+    }
   }
 }

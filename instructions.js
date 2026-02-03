@@ -1,15 +1,15 @@
 // NOTE: Do NOT add setup() or draw() in this file
 // setup() and draw() live in main.js
 // This file only defines:
-// 1) drawInstr() → what the instructions screen looks like
+// 1) drawInstr() → what the Instructions screen looks like
 // 2) input handlers → how the player returns to the start screen
 // 3) helper functions specific to this screen
 
 // ------------------------------
-// Main draw function for instructions screen
+// Main draw function for Instructions screen
 // ------------------------------
 // drawInstr() is called from main.js
-// only when currentScreen === "instr"
+// only when currentScreen === "Instr"
 function drawInstr() {
   // Light neutral background
   background(240);
@@ -24,9 +24,12 @@ function drawInstr() {
   textSize(18);
 
   // \n creates a line break in the text
-  // This is useful for simple multi-line instructions
+  // This is useful for simple multi-line Instructions
   const lines =
-    "Press the game button.\n" + "You have a chance to win or lose!";
+    "Karma points track your choices in the game.\n\n" +
+    "Positive choices (helping someone, telling the truth) add +1 karma.\n" +
+    "Neutral or negative choices (ignoring others, staying quiet) add 0 karma.\n\n" +
+    "Back button returns to the main menu.";
 
   text(lines, width / 2, 160);
 
@@ -48,9 +51,9 @@ function drawInstr() {
 }
 
 // ------------------------------
-// Mouse input for instructions screen
+// Mouse input for Instructions screen
 // ------------------------------
-// Called from main.js only when currentScreen === "instr"
+// Called from main.js only when currentScreen === "Instr"
 function instrMousePressed() {
   // Button data must match the draw position
   const backBtn = { x: width / 2, y: 560, w: 220, h: 70 };
@@ -62,7 +65,7 @@ function instrMousePressed() {
 }
 
 // ------------------------------
-// Keyboard input for instructions screen
+// Keyboard input for Instructions screen
 // ------------------------------
 // Provides keyboard-only navigation
 function instrKeyPressed() {
@@ -78,7 +81,7 @@ function instrKeyPressed() {
 }
 
 // ------------------------------
-// Button drawing helper (instructions screen)
+// Button drawing helper (Instructions screen)
 // ------------------------------
 // This function is only responsible for drawing the button.
 // It is kept separate so the visual style can be changed
