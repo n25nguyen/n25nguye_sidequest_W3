@@ -12,7 +12,7 @@ Karen Cochrane and David Han and Nat Nguyen
 
 ## Description
 
-This p5.js project demonstrates a simple multi-screen game structure using a state-based approach inspired by the game "Life is Strange". The example includes a start screen, an instructions screen with a back button, a basic game screen, and win/lose outcome screens. Player input is routed based on the current game state, allowing the story to unfold across multiple scenes. A basic player stat (karma) is tracked throughout the game and influences which ending is shown, illustrating how small choices can affect outcomes. The project focuses on clear file organization, simple UI elements such as buttons and keyboard controls, and an easy-to-understand approach to branching game logic.
+This p5.js project demonstrates a simple multi-screen game structure using a state-based approach. Inspired by Life is Strange, this interactive story lets players make choices that branch the narrative. Every decision affects your karma, leading to different endings.This game includes a start screen, an instructions screen with a back button, a basic game screen, and win/lose outcome screens. Player choices affect a tracked stat, karma, which determines the ending.
 
 ---
 
